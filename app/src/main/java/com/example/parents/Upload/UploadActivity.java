@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.parents.Login.LoginActivity;
 import com.example.parents.R;
 import com.example.parents.Widget.UploadUtils.HttpUtil;
 import com.example.parents.Widget.UploadUtils.ProgressListener;
@@ -33,7 +31,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.example.parents.Login.LoginActivity.makeStatusBarTransparent;
+import static com.example.parents.LoginRegister.LoginActivity.makeStatusBarTransparent;
 
 public class UploadActivity extends AppCompatActivity  implements View.OnClickListener{
 

@@ -1,4 +1,4 @@
-package com.example.parents.Login;
+package com.example.parents.LoginRegister;
 
 import android.view.animation.LinearInterpolator;
 

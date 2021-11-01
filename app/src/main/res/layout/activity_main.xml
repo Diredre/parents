@@ -9,11 +9,9 @@
     android:orientation="vertical"
     tools:openDrawer="start">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="1"
-        android:orientation="vertical"
         android:fitsSystemWindows="true">
 
         <Button
@@ -43,15 +41,96 @@
             android:layout_below="@+id/main_btn_tohomework"
             android:layout_centerHorizontal="true"
             android:text="消息通知"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <!--侧边栏内容-->
+    <RelativeLayout
+        android:layout_width="250dp"
         android:layout_height="match_parent"
-        android:weightSum="1">
+        android:layout_gravity="start"
+        android:background="#FFFFFF">
+
+        <View
+            android:id="@+id/main_users"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="#000000"/>
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="100dp"
+            android:alpha="0.5"
             android:src="@mipmap/img1"/>
-    </LinearLayout>
+        <com.example.parents.View.RoundImageView
+            android:id="@+id/main_riv_usericon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
+            android:src="@mipmap/added"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="云淡风轻"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/main_riv_usericon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/main_users">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#35A99E"
+                android:text="关联学习机账号"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#35A99E"
+                android:text="关联学习机账号"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#35A99E"
+                android:text="关联学习机账号"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp">
+            <ImageView
+                android:id="@+id/main_iv_setting"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="30dp"/>
+            <ImageView
+                android:id="@+id/main_iv_off"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

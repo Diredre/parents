@@ -1,4 +1,4 @@
-package com.example.parents.Login;
+package com.example.parents.LoginRegister;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,10 +18,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +27,6 @@ import com.bumptech.glide.Glide;
 import com.example.parents.MainActivity;
 import com.example.parents.R;
 import com.example.parents.Widget.CirclePgBar;
-
-import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -128,7 +124,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
                 break;
             case R.id.login_tv_resgister:
-                Toast.makeText(LoginActivity.this, "注册界面", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                LoginActivity.this.finish();
                 break;
             case R.id.login_tv_forget:
                 Toast.makeText(LoginActivity.this, "找回密码界面", Toast.LENGTH_SHORT).show();

@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 
 import com.example.parents.R;
 import com.example.parents.View.TitleLayout;
@@ -22,7 +20,7 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
-import static com.example.parents.Login.LoginActivity.makeStatusBarTransparent;
+import static com.example.parents.LoginRegister.LoginActivity.makeStatusBarTransparent;
 /**
  * 家长布置作业
  */

@@ -20,8 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parents">
-        <activity android:name=".Homework.RecordActivity"></activity>
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".LoginRegister.RegisterActivity"></activity>
+        <activity android:name=".Homework.RecordActivity" />
+        <activity android:name=".LoginRegister.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
