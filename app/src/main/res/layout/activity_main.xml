@@ -69,7 +69,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="60dp"
             android:src="@mipmap/added"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginLeft="30dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,40 +77,85 @@
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/main_riv_usericon"/>
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/main_riv_usericon"
+            android:layout_alignBaseline="@+id/main_riv_usericon"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@+id/main_users">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:textSize="16sp"
-                android:textColor="#35A99E"
-                android:text="关联学习机账号"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#35A99E"
+                    android:text="我的个人主页"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:textSize="16sp"
-                android:textColor="#35A99E"
-                android:text="关联学习机账号"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#35A99E"
+                    android:text="收藏"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
-                android:textSize="16sp"
-                android:textColor="#35A99E"
-                android:text="关联学习机账号"/>
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#35A99E"
+                    android:text="帮助与客服" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#35A99E"
+                    android:text="设备管理"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -121,16 +166,16 @@
             android:layout_marginBottom="20dp">
             <ImageView
                 android:id="@+id/main_iv_setting"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="30dp"/>
+                android:layout_marginLeft="50dp"/>
             <ImageView
                 android:id="@+id/main_iv_off"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"/>
+                android:layout_marginRight="50dp"/>
         </RelativeLayout>
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>
