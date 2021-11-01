@@ -20,8 +20,12 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.parents.Login.LoginActivity.makeStatusBarTransparent;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
+import static com.example.parents.Login.LoginActivity.makeStatusBarTransparent;
+/**
+ * 家长布置作业
+ */
 public class HomeworkActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TitleLayout homework_tit;
@@ -55,8 +59,9 @@ public class HomeworkActivity extends AppCompatActivity implements View.OnClickL
         hwlist.add(new HomeworkBean("勾股定理", new Time(30)));
 
         homework_rv_hwlist.setItemAnimator(new DefaultItemAnimator());
-        homework_rv_hwlist.getItemAnimator().setAddDuration(1000);
-        homework_rv_hwlist.getItemAnimator().setRemoveDuration(1000);
+        homework_rv_hwlist.setItemAnimator(new SlideInUpAnimator());        //设置上浮动画
+        homework_rv_hwlist.getItemAnimator().setAddDuration(500);
+        homework_rv_hwlist.getItemAnimator().setRemoveDuration(500);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeworkActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

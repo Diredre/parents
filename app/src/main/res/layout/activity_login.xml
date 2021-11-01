@@ -111,14 +111,23 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:alpha="0.7"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/img3"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="登陆即代表阅读并同意服务条款。"
-        android:textColor="#8ED097"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"/>
+
 </RelativeLayout>
