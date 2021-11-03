@@ -1,35 +1,39 @@
 package com.example.parents.Homework;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.example.parents.R;
 import com.example.parents.View.TitleLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
+
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 import static com.example.parents.LoginRegister.LoginActivity.makeStatusBarTransparent;
 /**
  * 家长布置作业
  */
-public class HomeworkActivity extends AppCompatActivity implements View.OnClickListener{
+public class HomeworkActivity extends SwipeActivity implements View.OnClickListener, OnItemClickListener {
 
     private TitleLayout homework_tit;
     private FloatingActionButton homework_fb_add;
-    private RecyclerView homework_rv_hwlist;
-    private HomeworkAdapter homeworkAdapter;
+    private SwipeRecyclerView homework_rv_hwlist;
+    private SwipeAdapter homeworkAdapter;
     private List<HomeworkBean> hwlist = new ArrayList<>();
 
 
@@ -51,23 +55,21 @@ public class HomeworkActivity extends AppCompatActivity implements View.OnClickL
         homework_fb_add.setOnClickListener(this);
 
         homework_rv_hwlist = findViewById(R.id.homework_rv_hwlist);
-        hwlist.add(new HomeworkBean("预习《滕王阁序》", new Time(30)));
-        hwlist.add(new HomeworkBean("背诵《滕王阁序》", new Time(60)));
-        hwlist.add(new HomeworkBean("做完数学课堂练习", new Time(45)));
-        hwlist.add(new HomeworkBean("勾股定理", new Time(30)));
 
-        homework_rv_hwlist.setItemAnimator(new DefaultItemAnimator());
-        homework_rv_hwlist.setItemAnimator(new SlideInUpAnimator());        //设置上浮动画
+        /*homework_rv_hwlist.setItemAnimator(new DefaultItemAnimator());
+        homework_rv_hwlist.setItemAnimator(new SlideInUpAnimator());        //设置上浮动画*/
         homework_rv_hwlist.getItemAnimator().setAddDuration(500);
         homework_rv_hwlist.getItemAnimator().setRemoveDuration(500);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeworkActivity.this);
+        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeworkActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        homework_rv_hwlist.setLayoutManager(linearLayoutManager);
-        LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
-        linearSnapHelper.attachToRecyclerView(homework_rv_hwlist);
-        homeworkAdapter = new HomeworkAdapter(HomeworkActivity.this, hwlist);
-        homework_rv_hwlist.setAdapter(homeworkAdapter);
+        RecyclerView.ItemDecoration itemDecoration = creat_itemDecoration();*/
+
+        homework_rv_hwlist.setOnItemClickListener(this);    // 点击item事件
+
+        homeworkAdapter = new HomeworkAdapter(HomeworkActivity.this);
+        homeworkAdapter.notifyDataSetChanged(hwlist);
+        //homework_rv_hwlist.setAdapter(homeworkAdapter);
     }
 
     @Override
@@ -77,5 +79,23 @@ public class HomeworkActivity extends AppCompatActivity implements View.OnClickL
                 hwlist.add(new HomeworkBean("新增", new Time(10)));
                 homeworkAdapter.notifyItemChanged(hwlist.size()-1);
         }
+    }
+
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        Toast.makeText(this, "第" + position + "个", Toast.LENGTH_SHORT).show();
+    }
+
+    protected boolean displayHomeAsUpEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
     }
 }

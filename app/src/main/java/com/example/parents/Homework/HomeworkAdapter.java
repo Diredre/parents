@@ -28,14 +28,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHolder>{
+public class HomeworkAdapter extends SwipeAdapter<HomeworkAdapter.ViewHolder>{
 
     private List<HomeworkBean> hwList;
     private Context context;
 
     DateFormat format= DateFormat.getDateTimeInstance();
     Calendar calendar= Calendar.getInstance(Locale.CHINA);
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         EditText et;
@@ -53,9 +52,15 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
     }
 
 
-    public HomeworkAdapter(Context context, List<HomeworkBean> hwList) {
+    public HomeworkAdapter(Context context) {
+        super(context);
         this.context = context;
+    }
+
+    @Override
+    public void notifyDataSetChanged(List<HomeworkBean> dataList) {
         this.hwList = hwList;
+        super.notifyDataSetChanged();
     }
 
     @NonNull
