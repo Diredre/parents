@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeworkAdapter extends SwipeAdapter<HomeworkAdapter.ViewHolder>{
+public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHolder> {
 
     private List<HomeworkBean> hwList;
     private Context context;
@@ -39,29 +39,24 @@ public class HomeworkAdapter extends SwipeAdapter<HomeworkAdapter.ViewHolder>{
     public static class ViewHolder extends RecyclerView.ViewHolder{
         EditText et;
         ImageView iv_cal;
-        ImageView iv_ach;
+        TextView tv_del;
         TextView timetv;
 
         public ViewHolder(View v){
             super(v);
             this.et = v.findViewById(R.id.item_puthw_et);
             this.iv_cal = v.findViewById(R.id.item_puthw_iv_cal);
-            this.iv_ach = v.findViewById(R.id.item_puthw_iv_ach);
+            this.tv_del = v.findViewById(R.id.item_puthw_tv_del);
             this.timetv = v.findViewById(R.id.item_puthw_tv);
         }
     }
 
 
-    public HomeworkAdapter(Context context) {
-        super(context);
+    public HomeworkAdapter(Context context, List<HomeworkBean> hwList) {
         this.context = context;
+        this.hwList = hwList;
     }
 
-    @Override
-    public void notifyDataSetChanged(List<HomeworkBean> dataList) {
-        this.hwList = hwList;
-        super.notifyDataSetChanged();
-    }
 
     @NonNull
     @NotNull
@@ -92,10 +87,10 @@ public class HomeworkAdapter extends SwipeAdapter<HomeworkAdapter.ViewHolder>{
             }
         });
 
-        Glide.with(context)
+        /*Glide.with(context)
                 .load("https://z3.ax1x.com/2021/10/30/5x8T3Q.png")
-                .into(holder.iv_ach);
-        holder.iv_ach.setOnClickListener(new View.OnClickListener() {
+                .into(holder.iv_ach);*/
+        holder.tv_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 removeItemData(position);

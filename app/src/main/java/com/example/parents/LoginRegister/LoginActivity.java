@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            // login按钮
+                // login按钮
             case R.id.login_btn_login:
                 // 计算出控件的高与宽
                 mWidth = login_btn_login.getMeasuredWidth();
@@ -108,8 +108,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 input_layout_phone.setVisibility(View.INVISIBLE);
                 input_layout_psw.setVisibility(View.INVISIBLE);
                 inputAnimator(login_ll_input, mWidth, mHeight);
-                // 设置进度条5s达到100%，跳转进入主界面
-                login_pb.setProgress(100, 5000);
+                // 设置进度条3s达到100%，跳转进入主界面
+                login_pb.setProgress(100, 3000);
                 login_pb.setOnCircleProgressListener(new CirclePgBar.OnCircleProgressListener() {
                     @Override
                     public boolean OnCircleProgress(int progress) {
@@ -123,10 +123,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
                 break;
+
+                // 立即注册
             case R.id.login_tv_resgister:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 LoginActivity.this.finish();
                 break;
+
+                // 忘记密码
             case R.id.login_tv_forget:
                 Toast.makeText(LoginActivity.this, "找回密码界面", Toast.LENGTH_SHORT).show();
                 break;

@@ -2,38 +2,40 @@ package com.example.parents.Homework;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.parents.R;
+import com.example.parents.View.SlideRecyclerView;
 import com.example.parents.View.TitleLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import com.yanzhenjie.recyclerview.OnItemClickListener;
-import com.yanzhenjie.recyclerview.SwipeRecyclerView;
-import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 import static com.example.parents.LoginRegister.LoginActivity.makeStatusBarTransparent;
+
 /**
  * 家长布置作业
  */
-public class HomeworkActivity extends SwipeActivity implements View.OnClickListener, OnItemClickListener {
+public class HomeworkActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TitleLayout homework_tit;
     private FloatingActionButton homework_fb_add;
-    private SwipeRecyclerView homework_rv_hwlist;
-    private SwipeAdapter homeworkAdapter;
+    private SlideRecyclerView homework_rv_hwlist;
+    private HomeworkAdapter homeworkAdapter;
     private List<HomeworkBean> hwlist = new ArrayList<>();
 
 
@@ -54,41 +56,64 @@ public class HomeworkActivity extends SwipeActivity implements View.OnClickListe
         homework_fb_add = findViewById(R.id.homework_fb_add);
         homework_fb_add.setOnClickListener(this);
 
+        // 设置作业序列
         homework_rv_hwlist = findViewById(R.id.homework_rv_hwlist);
-
-        /*homework_rv_hwlist.setItemAnimator(new DefaultItemAnimator());
-        homework_rv_hwlist.setItemAnimator(new SlideInUpAnimator());        //设置上浮动画*/
+        homework_rv_hwlist.setItemAnimator(new DefaultItemAnimator());
+        homework_rv_hwlist.setItemAnimator(new SlideInUpAnimator());        //设置上浮动画
         homework_rv_hwlist.getItemAnimator().setAddDuration(500);
         homework_rv_hwlist.getItemAnimator().setRemoveDuration(500);
 
-        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeworkActivity.this);
+        // 垂直滑动
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeworkActivity.this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        RecyclerView.ItemDecoration itemDecoration = creat_itemDecoration();*/
+        homework_rv_hwlist.setLayoutManager(linearLayoutManager);
 
-        homework_rv_hwlist.setOnItemClickListener(this);    // 点击item事件
+        // SnapHelper滑动对准
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(homework_rv_hwlist);
 
-        homeworkAdapter = new HomeworkAdapter(HomeworkActivity.this);
-        homeworkAdapter.notifyDataSetChanged(hwlist);
-        //homework_rv_hwlist.setAdapter(homeworkAdapter);
+        hwlist = initData();
+        homeworkAdapter = new HomeworkAdapter(HomeworkActivity.this, hwlist);
+        homework_rv_hwlist.setAdapter(homeworkAdapter);
+    }
+
+    private List<HomeworkBean> initData(){
+        List<HomeworkBean> dataList = new ArrayList<>();
+        dataList.add(new HomeworkBean("预习《滕王阁序》", new Time(30)));
+        dataList.add(new HomeworkBean("背诵《滕王阁序》", new Time(60)));
+        dataList.add(new HomeworkBean("做完数学课堂练习", new Time(45)));
+        dataList.add(new HomeworkBean("勾股定理", new Time(30)));
+
+        return dataList;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.homework_fb_add:
-                hwlist.add(new HomeworkBean("新增", new Time(10)));
-                homeworkAdapter.notifyItemChanged(hwlist.size()-1);
+                final InputHWDialog inputHWDialog = new InputHWDialog(this);
+                final EditText input = inputHWDialog.getEditText();
+                inputHWDialog.setOnSureListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        hwlist.add(new HomeworkBean(input.toString(), new Time(10)));
+                        // 通知适配器
+                        homeworkAdapter.notifyItemChanged(hwlist.size()-1);
+                        // 更新定位
+                        homework_rv_hwlist.scrollToPosition(homeworkAdapter.getItemCount()-1);
+                        Toast.makeText(HomeworkActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                        inputHWDialog.dismiss();
+                    }
+                });
+                inputHWDialog.setOnCanlceListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        inputHWDialog.dismiss();
+                    }
+                });
+                inputHWDialog.setTile("请输入作业");
+                inputHWDialog.show();;
         }
-    }
-
-
-    @Override
-    public void onItemClick(View itemView, int position) {
-        Toast.makeText(this, "第" + position + "个", Toast.LENGTH_SHORT).show();
-    }
-
-    protected boolean displayHomeAsUpEnabled() {
-        return true;
     }
 
     @Override
@@ -96,6 +121,7 @@ public class HomeworkActivity extends SwipeActivity implements View.OnClickListe
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
+
         return true;
     }
 }

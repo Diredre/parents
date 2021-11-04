@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.parents">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -20,9 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parents">
-        <activity android:name=".Homework.SwipeActivity"></activity>
         <activity android:name=".LoginRegister.RegisterActivity" />
-        <activity android:name=".Homework.RecordActivity" />
         <activity android:name=".LoginRegister.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,11 +29,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Message.MessageActivity" />
-        <activity android:name=".Homework.HomeworkActivity" />
-        <activity android:name=".Watch.WatchActivity" />
-        <activity android:name=".Upload.UploadActivity" />
+
         <activity android:name=".MainActivity" />
+
+        <activity android:name=".Message.MessageActivity" />
+
+        <activity android:name=".Homework.HomeworkActivity" />
+        <activity android:name=".Homework.RecordActivity" />
+
+        <activity android:name=".Watch.WatchActivity" />
+
+        <activity android:name=".Upload.UploadActivity" />
     </application>
 
 </manifest>
