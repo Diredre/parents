@@ -27,7 +27,11 @@ import com.bumptech.glide.Glide;
 import com.example.parents.MainActivity;
 import com.example.parents.R;
 import com.example.parents.Widget.CirclePgBar;
+import com.example.parents.Widget.JellyInterpolator;
 
+/**
+ * 登录界面
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView login_iv_phone, login_iv_password, login_iv_logo;
@@ -132,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 // 忘记密码
             case R.id.login_tv_forget:
-                Toast.makeText(LoginActivity.this, "找回密码界面", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, RemeberActivity.class));
                 break;
         }
     }

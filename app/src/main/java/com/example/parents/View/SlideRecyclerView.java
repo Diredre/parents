@@ -14,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 侧滑删除
+ */
 public class SlideRecyclerView extends RecyclerView {
     private static final String TAG = "SlideRecyclerView";
     private static final int INVALID_POSITION = -1; // 触摸到的点不在子View范围内

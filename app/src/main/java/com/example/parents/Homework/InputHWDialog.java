@@ -10,6 +10,9 @@ import com.example.parents.R;
 
 import androidx.annotation.NonNull;
 
+/**
+ * 输入内容dialog
+ */
 public class InputHWDialog extends Dialog {
     private Context mContext;
     private TextView btnSure;

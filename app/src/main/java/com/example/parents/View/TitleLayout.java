@@ -17,7 +17,9 @@ import com.bumptech.glide.Glide;
 import com.example.parents.R;
 import com.example.parents.Upload.UploadActivity;
 
-
+/**
+ * 标题栏
+ */
 public class TitleLayout extends LinearLayout {
 
     private ImageView title_iv;

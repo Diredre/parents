@@ -17,6 +17,9 @@ import com.example.parents.MainActivity;
 import com.example.parents.R;
 import com.example.parents.Widget.Code;
 
+/**
+ * 注册界面
+ */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView reg_iv_phone, reg_iv_password, reg_iv_code, reg_iv_logo, reg_iv_repassword, reg_iv_phcode;

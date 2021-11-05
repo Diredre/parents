@@ -7,6 +7,9 @@ import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+/**
+ * 相机
+ */
 public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder holdMe;

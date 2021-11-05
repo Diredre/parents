@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import com.example.parents.R;
 import com.example.parents.Widget.CirclePgBar;
 
+/**
+ * 视频上传的进度条dialog
+ */
 public class UploadProgressDialog extends Dialog {
 
     private ImageButton pb_dialog_cansel;

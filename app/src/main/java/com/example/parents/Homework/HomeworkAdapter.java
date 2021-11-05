@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
@@ -23,6 +24,7 @@ import com.example.parents.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +39,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
     Calendar calendar= Calendar.getInstance(Locale.CHINA);
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        EditText et;
+        TextView et;
         ImageView iv_cal;
         TextView tv_del;
         TextView timetv;
@@ -73,16 +75,22 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         HomeworkBean homework = hwList.get(position);
 
         holder.et.setText(homework.getCon());
+        holder.et.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputDialogShow();
+            }
+        });
 
         Glide.with(context)
-                .load("https://z3.ax1x.com/2021/10/31/IS4QUI.png")
+                .load("https://z3.ax1x.com/2021/11/05/IKZhTS.png")
                 .into(holder.iv_cal);
         holder.iv_cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(context,  4, holder.timetv, calendar);
+                showTimePickerDialog(context,  2, holder.timetv, calendar);
                 Glide.with(context)
-                        .load("https://z3.ax1x.com/2021/10/30/5xnjr8.png")
+                        .load("https://z3.ax1x.com/2021/11/05/IKF5BF.png")
                         .into(holder.iv_cal);
             }
         });
@@ -152,4 +160,34 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         //notifyDataSetChanged();     //防止错位
     }
 
+
+    /**
+     * 输入作业内容dialog
+     */
+    public void inputDialogShow(){
+        InputHWDialog inputHWDialog = new InputHWDialog(context);
+        EditText input = inputHWDialog.getEditText();
+        inputHWDialog.setOnSureListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!input.getText().toString().trim().equals("")) {
+                    hwList.add(new HomeworkBean(input.getText().toString().trim(), new Time(10)));
+                    // 通知适配器
+                    notifyItemInserted(hwList.size()-1);
+                    Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
+                    inputHWDialog.dismiss();
+                }else{
+                    Toast.makeText(context, "请输入作业", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        inputHWDialog.setOnCanlceListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputHWDialog.dismiss();
+            }
+        });
+        inputHWDialog.setTile("请输入作业");
+        inputHWDialog.show();
+    }
 }

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal">
-            <EditText
+            <TextView
                 android:id="@+id/item_puthw_et"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
@@ -28,7 +28,7 @@
                 android:maxLines="1"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:hint="点击添加作业"/>
+                android:text="点击添加作业"/>
             <ImageView
                 android:id="@+id/item_puthw_iv_cal"
                 android:layout_width="30dp"

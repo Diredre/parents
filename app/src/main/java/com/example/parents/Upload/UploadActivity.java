@@ -1,5 +1,6 @@
 package com.example.parents.Upload;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -7,6 +8,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,13 +22,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.parents.R;
 import com.example.parents.Widget.UploadUtils.HttpUtil;
 import com.example.parents.Widget.UploadUtils.ProgressListener;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,6 +46,9 @@ import okhttp3.Response;
 
 import static com.example.parents.LoginRegister.LoginActivity.makeStatusBarTransparent;
 
+/**
+ * 上传视频界面
+ */
 public class UploadActivity extends AppCompatActivity  implements View.OnClickListener{
 
     public static final String TAG = UploadActivity.class.getName();
@@ -50,7 +66,8 @@ public class UploadActivity extends AppCompatActivity  implements View.OnClickLi
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_upload);
-        makeStatusBarTransparent(UploadActivity.this);
+        makeStatusBarTransparent(this);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);    //设置手机应用内部状态栏字体图标为黑色
 
         initView();
     }
@@ -88,7 +105,8 @@ public class UploadActivity extends AppCompatActivity  implements View.OnClickLi
                 if(VIDEOPATH.equals(""))
                     Toast.makeText(UploadActivity.this, "请选择视频后，再点击上传！", Toast.LENGTH_LONG).show();
                 else {
-                    File file = new File(VIDEOPATH);
+                    submit();
+                    /*File file = new File(VIDEOPATH);
                     String postUrl = "http://101.35.7.157/api/upload";
                     uploadProgressDialog.show();
                     HttpUtil.postFile(postUrl, new ProgressListener() {
@@ -111,7 +129,7 @@ public class UploadActivity extends AppCompatActivity  implements View.OnClickLi
                                 Log.i(TAG, "result===" + result);
                             }
                         }
-                    }, file);
+                    }, file);*/
                 }
                 break;
             case R.id.upload_iv_add:
@@ -133,7 +151,7 @@ public class UploadActivity extends AppCompatActivity  implements View.OnClickLi
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, UploadActivity.VEDIO_KU);
+        this.startActivityForResult(intent, UploadActivity.VEDIO_KU);
     }
 
     /**
@@ -240,5 +258,96 @@ public class UploadActivity extends AppCompatActivity  implements View.OnClickLi
                 .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    /**
+     * 获取视频第一帧作为封面
+     * @param url
+     * @return
+     */
+    public Bitmap getBitmapFormUrl(String url) {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(url);
+        //getFrameAtTime()--->在setDataSource()之后调用此方法。 如果可能，该方法在任何时间位置找到代表性的帧，
+        // 并将其作为位图返回。这对于生成输入数据源的缩略图很有用。
+        Bitmap bitmap = retriever.getFrameAtTime();
+        retriever.release();
+        return bitmap;
+    }
+
+
+    public static ByteArrayInputStream getByteArrayInputStream(File file){
+        return new ByteArrayInputStream(getByetsFromFile(file));
+    }
+
+    /**
+     * 视频文件转换为流方法
+     *  ByteArrayInputStream ins = new ByteArrayInputStream(picBytes);
+     * @param file
+     * @return
+     */
+    public static byte[] getByetsFromFile(File file){
+        FileInputStream is = null;
+        // 获取文件大小
+        long length = file.length();
+        // 创建一个数据来保存文件数据
+        byte[] fileData = new byte[(int)length];
+
+        try {
+            is = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int bytesRead=0;
+        // 读取数据到byte数组中
+        while(bytesRead != fileData.length) {
+            try {
+                bytesRead += is.read(fileData, bytesRead, fileData.length - bytesRead);
+                if(is != null)
+                    is.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return fileData;
+    }
+
+    /**
+     * 断点续传
+     */
+    public void submit(){
+        try {
+            File file = new File(VIDEOPATH);
+            FileInputStream is = null;
+            long length = file.length();    // 获取文件大小
+            byte[] fileData = null;         // 创建一个数据来保存文件数据
+
+            try {
+                is = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            // 读取数据到byte数组中
+            List<ByteArrayInputStream> temp = new ArrayList<>();
+            int len = 0;
+            fileData = new byte[1000 * 1000 * 2];
+
+            //断点续传
+            while ((len = is.read(fileData)) != -1) {
+                temp = new ArrayList<>();
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData);
+                temp.add(byteArrayInputStream);
+                //这里是提交数组流到后台
+                //RegisterControlService.submitVedioSon(
+                //SubVedioViewActivity.this, temp, fInfos, subIdx);
+                temp.clear();
+                byteArrayInputStream.close();
+            }
+            if (is != null)
+                is.close();
+        } catch (Exception ex) {
+        }
     }
 }
