@@ -78,7 +78,7 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
         holder.et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputDialogShow();
+                inputDialogShow(position);
             }
         });
 
@@ -164,16 +164,14 @@ public class HomeworkAdapter extends RecyclerView.Adapter<HomeworkAdapter.ViewHo
     /**
      * 输入作业内容dialog
      */
-    public void inputDialogShow(){
+    public void inputDialogShow(int position){
         InputHWDialog inputHWDialog = new InputHWDialog(context);
         EditText input = inputHWDialog.getEditText();
         inputHWDialog.setOnSureListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!input.getText().toString().trim().equals("")) {
-                    hwList.add(new HomeworkBean(input.getText().toString().trim(), new Time(10)));
-                    // 通知适配器
-                    notifyItemInserted(hwList.size()-1);
+                    hwList.get(position).setCon(input.getText().toString().trim());
                     Toast.makeText(context, "修改成功", Toast.LENGTH_SHORT).show();
                     inputHWDialog.dismiss();
                 }else{

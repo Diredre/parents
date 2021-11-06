@@ -22,7 +22,8 @@ import com.example.parents.Widget.Code;
  */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ImageView reg_iv_phone, reg_iv_password, reg_iv_code, reg_iv_logo, reg_iv_repassword, reg_iv_phcode;
+    private ImageView reg_iv_back, reg_iv_phone, reg_iv_password,
+            reg_iv_code, reg_iv_logo, reg_iv_repassword, reg_iv_phcode;
     private Button reg_btn_reg;
     private EditText reg_et_phone, reg_et_code, reg_et_password, reg_et_repassword;
     private String real_code;       // 生成验证码
@@ -77,6 +78,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Glide.with(RegisterActivity.this)
                 .load("https://z3.ax1x.com/2021/10/24/5WK2jS.png")
                 .into(reg_iv_logo);
+
+        reg_iv_back = findViewById(R.id.reg_iv_back);
+        Glide.with(this)
+                .load("https://z3.ax1x.com/2021/11/06/IMMs8U.png")
+                .into(reg_iv_back);
+        reg_iv_back.setOnClickListener(this);
     }
 
 
@@ -122,6 +129,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.reg_iv_phcode:
                 reg_iv_phcode.setImageBitmap(Code.getInstance().createBitmap());
                 real_code = Code.getInstance().getCode().toLowerCase();
+                break;
+            case R.id.reg_iv_back:
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish();
+                break;
         }
     }
 }
